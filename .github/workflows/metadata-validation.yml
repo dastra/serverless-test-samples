@@ -2,11 +2,6 @@ name: Metadata Validation Pattern Submission Workflow
 
 on:
   push:
-    paths:
-      - "python-test-samples/**"
-      - "dotnet-test-samples/**"
-      - "typescript-test-samples/**"
-      - "java-test-samples/**"
 
 permissions:
   contents: read
@@ -27,11 +22,12 @@ jobs:
       uses: tj-actions/changed-files@v44
       with:
         files: *-test-samples/*/*.json
+        separator: ","
 
     - name: Echo changed files
       id: setfiles
       run: |
-        files=${{ steps.changed-files.outputs.all_changed_files }}
+        files=${{ steps.get_changed.outputs.all_changed_files }}
         echo $files
         echo "FILES=$files" >> $GITHUB_OUTPUT
 
