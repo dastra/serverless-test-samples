@@ -21,7 +21,7 @@ jobs:
       id: get_changed
       uses: tj-actions/changed-files@v44
       with:
-        files: *-test-samples/*/*.json
+        files: "*-test-samples/*/*.json"
         separator: ","
 
     - name: Echo changed files
