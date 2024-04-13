@@ -29,7 +29,7 @@ jobs:
         files=${{ steps.get_changed.outputs.all_changed_files }}
         echo $files
         echo "FILES=$files" >> $GITHUB_OUTPUT
-        if [[ -z "$files" ]]; then
+        if [[ ! -z "$files" ]]; then
           echo "run_validate=true" >> $GITHUB_OUTPUT
         fi
 
