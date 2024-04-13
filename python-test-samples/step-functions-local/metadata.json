@@ -4,7 +4,7 @@
   "content_language": "English",
   "language": "Python",
   "type": ["Unit"],
-  "diagram": "z/img/stepfunctions_local_test.png",
+  "diagram": "/img/stepfunctions_local_test.png",
   "services": ["sfn"],
   "git_repo_url": "https://github.com/aws-samples/serverless-test-samples",
   "pattern_source": "AWS",
