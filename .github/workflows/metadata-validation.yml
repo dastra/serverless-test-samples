@@ -36,8 +36,6 @@ jobs:
       run: |
         files=${{ steps.get_changed.outputs.all_changed_files }}
         if [[ -z "$files" ]]; then
-          echo "run_validate=false" >> $GITHUB_OUTPUT
-        else
           echo "run_validate=true" >> $GITHUB_OUTPUT
         fi
         cat $GITHUB_OUTPUT
@@ -47,7 +45,7 @@ jobs:
     name: "Validate Files"
     needs: files-changed
     runs-on: ubuntu-latest
-    if: ${{ needs.files-changed.outputs.run_validate == 'true' }}
+    if: ${{ needs.files-changed.outputs.run_validate }}
 
     steps:
 
