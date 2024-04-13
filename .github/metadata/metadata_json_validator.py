@@ -75,6 +75,19 @@ def validate_metadata_json(metadata_schema: dict, metadata_json_filename: str) -
         return False
 
 
+def check_file_exists(filename: str) -> bool:
+    """
+    Makes sure a file exists
+    :param: filename - path to the file to validate
+    :return: Boolean indicating whether file exists
+    """
+    if not path.isfile(filename):
+        print(f"File not found: {filename}")
+        return False
+
+    return True
+
+
 def check_files_in_metadata_exist(metadata_json_filename: str) -> bool:
     """
     Makes sure any files listed in the metadata.json file actually exist
@@ -90,11 +103,12 @@ def check_files_in_metadata_exist(metadata_json_filename: str) -> bool:
         for tab in metadata["pattern_detail_tabs"]:
             # test whether the "filepath" key exists in the tab dict
             if "filepath" in tab:
-                filename = pattern_dirname + tab["filepath"]
-                # check whether the file exists
-                if not path.isfile(filename):
-                    print(f"File not found: {filename}")
+                if not check_file_exists(pattern_dirname + tab["filepath"]):
                     validated_ok = False
+
+        if "diagram" in metadata:
+            if not check_file_exists(pattern_dirname + metadata["diagram"]):
+                validated_ok = False
 
     return validated_ok
 
@@ -111,7 +125,6 @@ def validate_test_sample_folders(folders: set) -> bool:
 
     with open(file_path, "r", encoding="utf-8") as metadata_schema_file:
         metadata_schema = json.load(metadata_schema_file)
-        # metadata_schema = metadata_schema_file.read()
         validated_ok = True
         for folder in folders:
             metadata_filename = path.join(folder, "metadata.json")
