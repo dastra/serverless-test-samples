@@ -51,7 +51,7 @@ jobs:
 
     - name: Echo run validate
       run: |
-        outputs=${{ needs.files-changed.outputs }}
+        outputs=${{ needs.files-changed.outputs.run_validate }}
         echo $outputs
 
     - name: Set up Python 3.12
