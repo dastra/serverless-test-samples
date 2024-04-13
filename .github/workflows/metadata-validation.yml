@@ -7,8 +7,7 @@ permissions:
   contents: read
 
 jobs:
-  files-changed:
-    name: "Files Changed"
+  default:
     runs-on: ubuntu-latest
 
     steps:
@@ -30,37 +29,20 @@ jobs:
         files=${{ steps.get_changed.outputs.all_changed_files }}
         echo $files
         echo "FILES=$files" >> $GITHUB_OUTPUT
-
-    - name: Set Job Output
-      id: set_output
-      run: |
-        files=${{ steps.get_changed.outputs.all_changed_files }}
         if [[ -z "$files" ]]; then
           echo "run_validate=true" >> $GITHUB_OUTPUT
         fi
-        cat $GITHUB_OUTPUT
-      shell: bash
-
-  validate-files:
-    name: "Validate Files"
-    needs: files-changed
-    runs-on: ubuntu-latest
-    # if: ${{ needs.files-changed.outputs.run_validate }}
-
-    steps:
-
-    - name: Echo run validate
-      run: |
-        outputs=${{ needs.files-changed.outputs.run_validate }}
-        echo $outputs
 
     - name: Set up Python 3.12
+      if: ${{ steps.setfiles.outputs.run_validate == 'true' }}
       uses: actions/setup-python@v5
       with:
         python-version: "3.12"
 
     - name: Install requirements
+      if: ${{ steps.setfiles.outputs.run_validate == 'true' }}
       run: pip install -r .github/metadata/requirements.txt
 
     - name: Validate Schema
+      if: ${{ steps.setfiles.outputs.run_validate == 'true' }}
       run: python .github/metadata/metadata_json_validator.py ${{ steps.get_changed.outputs.all_changed_files }}
