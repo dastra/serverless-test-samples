@@ -49,6 +49,11 @@ jobs:
 
     steps:
 
+    - name: Echo run validate
+      run: |
+        outputs=${{ needs.files-changed.outputs }}
+        echo $outputs
+
     - name: Set up Python 3.12
       uses: actions/setup-python@v5
       with:
