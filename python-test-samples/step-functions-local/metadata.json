@@ -11,7 +11,7 @@
   "pattern_detail_tabs": [
         {
             "title": "Step Functions State Machine",
-            "filepath": "/statemachine/local_testing.asl.json"
+            "filepath": "x/statemachine/local_testing.asl.json"
         },
         {
             "title": "Unit Tests2",
