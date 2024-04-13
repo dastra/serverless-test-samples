@@ -15,7 +15,7 @@
         },
         {
             "title": "Unit Tests2",
-            "filepath": "/tests/unit/src/test_step_functions_local.py"
+            "filepath": "xxx/tests/unit/src/test_step_functions_local.py"
         }
     ],
     "authors": [
