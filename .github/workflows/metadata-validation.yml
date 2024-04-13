@@ -46,3 +46,15 @@ jobs:
     - name: Validate Schema
       if: ${{ steps.setfiles.outputs.run_validate == 'true' }}
       run: python .github/metadata/metadata_json_validator.py ${{ steps.get_changed.outputs.all_changed_files }}
+
+    - name: Comment
+      if: failure()
+      uses: actions/github-script@v7
+      with:
+        script: |
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: `**Failed to verify your serverless test pattern metadata.json file**: Please check the GitHub Actions and make the changes required to your template.`
+          })
