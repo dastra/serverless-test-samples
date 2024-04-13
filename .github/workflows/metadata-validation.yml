@@ -45,7 +45,7 @@ jobs:
     name: "Validate Files"
     needs: files-changed
     runs-on: ubuntu-latest
-    if: ${{ needs.files-changed.outputs.run_validate }}
+    # if: ${{ needs.files-changed.outputs.run_validate }}
 
     steps:
 
