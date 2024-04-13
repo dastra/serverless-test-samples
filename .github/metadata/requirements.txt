@@ -1,3 +1,4 @@
+fastjsonschema
 jmespath
 aws_lambda_powertools
 jsonschema

@@ -7,8 +7,8 @@ permissions:
   contents: read
 
 jobs:
-  build:
-
+  files-changed:
+    name: "Files Changed"
     runs-on: ubuntu-latest
 
     steps:
@@ -30,6 +30,24 @@ jobs:
         files=${{ steps.get_changed.outputs.all_changed_files }}
         echo $files
         echo "FILES=$files" >> $GITHUB_OUTPUT
+
+    - name: Set Job Output
+      id: set_output
+      run: |
+        files=${{ steps.get_changed.outputs.all_changed_files }}
+        if [[-z "files"]]; then
+          echo "::set-output name=run_validate::false"
+        else
+          echo "::set-output name=run_validate::true"
+        fi
+
+  validate-files:
+    name: "Validate Files"
+    needs: files-changed
+    runs-on: ubuntu-latest
+    if: ${{ needs.files-changed.outputs.run_validate == 'true' }}
+
+    steps:
 
     - name: Set up Python 3.12
       uses: actions/setup-python@v5
